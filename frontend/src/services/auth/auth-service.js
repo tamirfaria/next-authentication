@@ -1,6 +1,6 @@
 export const authService = {
   async login({ username, password }) {
-    fetch("http://localhost:4000/api/login", {
+    return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,12 +10,10 @@ export const authService = {
         username,
         password,
       }),
-    })
-      .then((response) => {
-        console.log({ response });
-      })
-      .catch((error) => {
-        console.log({ error });
-      });
+    }).then(async (response) => {
+      if (!response.ok) throw new Error("Username or password invalid");
+      const body = await response.json();
+      console.log(body);
+    });
   },
 };

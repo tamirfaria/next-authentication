@@ -31,8 +31,8 @@ export default function HomeScreen() {
         console.log("User successfully authenticated");
         router.push("/auth-page-ssr");
       })
-      .catch(() => {
-        alert("User or password wrong");
+      .catch((error) => {
+        alert(error);
       });
   };
 
