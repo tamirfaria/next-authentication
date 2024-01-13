@@ -1,5 +1,4 @@
-import { v4 as uuid } from 'uuid';
-import { db } from '../../db';
+import { db } from "../../db";
 
 const userController = {
   getAll(_, res) {
@@ -7,44 +6,41 @@ const userController = {
       res.status(200).json({
         data: {
           users: docs,
-        }
+        },
       });
     });
   },
   create(req, res) {
     const newUser = {
       username: req.body.username,
-      password: 'safepassword',
+      password: "safepassword",
       name: req.body.name,
       email: req.body.email,
     };
 
-    db.users.insert(newUser, function(err) {
-      if(err) {
+    db.users.insert(newUser, function (err) {
+      if (err) {
         res.status(400).json({
           error: {
             status: 400,
-            message: 'User already exists'
-          }
+            message: "User already exists",
+          },
         });
       }
 
       res.status(201).json({
         data: {
           user: newUser,
-        }
+        },
       });
     });
-
-
-  }
-}
-
+  },
+};
 
 const controllerBy = {
   GET: userController.getAll,
   POST: userController.create,
-}
+};
 
 /**
  * @swagger
@@ -55,7 +51,7 @@ const controllerBy = {
  *        content:
  *          application/json:
  *             schema:
- *                properties: 
+ *                properties:
  *                   username:
  *                      type: string
  *                      default: peas
@@ -85,7 +81,7 @@ export default function handle(req, res) {
   res.status(404).json({
     error: {
       status: 404,
-      message: 'Not Found'
-    }
+      message: "Not Found",
+    },
   });
 }
